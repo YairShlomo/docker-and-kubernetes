@@ -5,7 +5,19 @@ services:
   - docker
 
 before_install:
-  - docker build -t ya1rd0cker/docker-and-kubernetes/frontend -f Dockerfile.dev .
+  - docker build -t ya1rd0cker/docker-and-kubernetes -f Dockerfile.dev .
 
 script:
-  - docker run -e CI=true ya1rd0cker/docker-and-kubernetes/frontend npm run test
+  - docker run -e CI=true ya1rd0cker/docker-and-kubernetes npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-west-2'
+  app: 'docker-react'
+  env: 'Dockerreact-env'
+  bucket_name: 'elasticbeanstalk-us-west-2-670370764403'
+  bucket_path: 'docker-react'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
