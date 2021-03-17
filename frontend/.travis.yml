@@ -5,7 +5,6 @@ services:
   - docker
 
 before_install:
-  - cd ./frontend
   - docker build -t ya1rd0cker/docker-and-kubernetes/frontend -f Dockerfile.dev .
 
 script:
